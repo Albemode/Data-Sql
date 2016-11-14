@@ -1,78 +1,77 @@
 CREATE TABLE `Netflix` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(128) NOT NULL,
-  `url` VARCHAR(256) DEFAULT NULL,
-  INDEX (`Netflix`)
+  'id' integer PRIMARY KEY AUTOINCREMENT,
+  `name` varchar(50) NOT NULL,
+  'size' integer,
+  'industry' varchar(50)
 );
 
 CREATE TABLE `Members` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `fname` VARCHAR(128) NOT NULL,
-  `lname` VARCHAR(128) NOT NULL,
-  `email` VARCHAR(258) DEFAULT NULL,
-  `company` INT DEFAULT NULL,
-  `url_github` VARCHAR(256) NOT NULL,
-  `url_linkedin` VARCHAR(256) NOT NULL,
-  `url_twitter` VARCHAR(256) NOT NULL,
-  `url_personal` VARCHAR(256) NOT NULL,
-  FOREIGN KEY (`company`) REFERENCES
-    `company` (`id`) ON UPDATE CASCADE,
+  `User_id` integer PRIMARY KEY AUTOINCREMENT,
+  `fname` varchar(250) NOT NULL,
+  `lname` varchar(250) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  'dateCreated' timestamp DEFAULT current_timestamp );
+  FOREIGN KEY (`industry`) REFERENCES
+    `industry` (`id`) ON UPDATE CASCADE,
   UNIQUE KEY (`Members`)
 );
 
 CREATE TABLE `user` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `person` INT NOT NULL,
-  `password` VARCHAR(128) DEFAULT NULL,
-  FOREIGN KEY (`person`) REFERENCES
-    `person` (`id`) ON UPDATE CASCADE
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
+  `person` integer,
+  `password` varchar,
+  FOREIGN KEY (`email`) REFERENCES
+    `email` (`id`) ON UPDATE CASCADE
 );
 
-CREATE TABLE `Original_Series` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `company` INT,
-  `req` VARCHAR(64) DEFAULT NULL,
-  `title` VARCHAR(128) DEFAULT NULL,
-  `desc` TEXT DEFAULT NULL,
-  `Shows` VARCHAR(256) DEFAULT NULL,
-  `Movies` VARCHAR(256) DEFAULT NULL,
+CREATE TABLE Original_Series (
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
+  `company` varchar,
+  `req` varchar(64) 
+  `title` varchar,
+  `description` text DEFAULT NULL,
+  `Shows` varchar(256) DEFAULT NULL,
+  `Movies` varchar(256) DEFAULT NULL,
   INDEX (`title`),
   FOREIGN KEY (`Netflix`) REFERENCES
     UNIQUE KEY (`Original_Series`)
 );
 
 CREATE TABLE `Guide` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `parent` INT DEFAULT NULL,
-  `name` VARCHAR(128) DEFAULT NULL,
-  INDEX(`name`),
-  FOREIGN KEY (`parent`) REFERENCES
-    `Guide` (`id`) ON UPDATE CASCADE
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(128) DEFAULT NULL,
+  INDEX(`Original_Series`),
 );
 
 CREATE TABLE `Guide_Genre` (
-  `person` INT,
-  `Genre` INT,
-  FOREIGN KEY (`profile`) REFERENCES
-    `person` (`id`) ON UPDATE CASCADE,
+
+  `score` integer,
+  `Genre` varchar,
   FOREIGN KEY (`Genre`) REFERENCES
     `Genre` (`id`) ON UPDATE CASCADE
+    INDEX(`Guide`),
 );
 
 CREATE TABLE `Movies_Genre` (
-  `Movies` INT,
-  `Genre` INT,
-  FOREIGN KEY (`Genre`) REFERENCES
-    `Genre` (`id`) ON UPDATE CASCADE,
-  FOREIGN KEY (`Guide`) REFERENCES
-    `Guide` (`id`) ON UPDATE CASCADE
+  `Movies` integer,
+  `Genre` integer,
+  INDEX(`movie_Id`),
 );
 
 CREATE TABLE `Shows_Genre` (
-  `Shows` INT,
-  `Genre` INT,
+  `Shows` integer,
+  `Genre` integer,
   FOREIGN KEY (`Genre`) REFERENCES
     `Genre` (`id`) ON UPDATE CASCADE,
-  FOREIGN KEY (`Gudie`) REFERENCES
-    `Gudie` (`id`) ON UPDATE CASCADE
+    INDEX(`show_Id`),
 );
+
+create table allRatings (
+'movie_Id' integer(20),
+'show_Id' integer(20,)
+'User_Id' integer(20) primary key,
+'rating' integer(20),
+timestamp decimal(60,4)
+INDEX('Guide')
+);
+
